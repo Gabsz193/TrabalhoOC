@@ -61,6 +61,15 @@
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
+    <comp lib="0" loc="(1070,500)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="0" loc="(1100,540)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="0" loc="(1100,570)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
     <comp lib="0" loc="(140,660)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="radix" val="10unsigned"/>
@@ -112,6 +121,9 @@
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
+    <comp lib="0" loc="(620,740)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
     <comp lib="0" loc="(650,530)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
@@ -120,6 +132,12 @@
     </comp>
     <comp lib="0" loc="(690,390)" name="Splitter">
       <a name="facing" val="west"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
+    <comp lib="0" loc="(710,850)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="facing" val="north"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
@@ -138,6 +156,12 @@
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
+    <comp lib="0" loc="(820,720)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="facing" val="south"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
     <comp lib="0" loc="(840,480)" name="Splitter">
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
@@ -153,6 +177,14 @@
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
+    <comp lib="0" loc="(910,630)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="0" loc="(920,850)" name="Splitter">
+      <a name="facing" val="north"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
     <comp lib="0" loc="(950,480)" name="Splitter">
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
@@ -162,6 +194,26 @@
     </comp>
     <comp lib="0" loc="(990,560)" name="Pin">
       <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="0" loc="(990,800)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="1" loc="(1020,810)" name="Controlled Buffer">
+      <a name="facing" val="south"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(1080,340)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+    </comp>
+    <comp lib="4" loc="(1190,360)" name="RAM">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="databus" val="bidir"/>
+    </comp>
+    <comp lib="4" loc="(650,840)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+    </comp>
+    <comp lib="4" loc="(930,650)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
     </comp>
     <comp lib="8" loc="(175,410)" name="Text">
       <a name="text" val=" nesse barramento"/>
@@ -178,35 +230,57 @@
     <comp lib="8" loc="(650,130)" name="Text">
       <a name="text" val="3. Barramento principal com o resultado do registrador escolhido"/>
     </comp>
-    <comp lib="8" loc="(760,905)" name="Text">
+    <comp lib="8" loc="(717,1010)" name="Text">
       <a name="text" val="S: Setar valor do barramento para registrador"/>
     </comp>
-    <comp lib="8" loc="(810,925)" name="Text">
+    <comp lib="8" loc="(774,1038)" name="Text">
       <a name="text" val="E: Habilitar saída do registrador para barramento principal´"/>
     </comp>
     <comp loc="(1000,400)" name="Reg_8Bit_Exp"/>
-    <comp loc="(210,190)" name="ULA_Exp"/>
     <comp loc="(290,650)" name="Adder_8Bit_Exp"/>
     <comp loc="(670,400)" name="Reg_8Bit_Exp"/>
     <comp loc="(780,400)" name="Reg_8Bit_Exp"/>
+    <comp loc="(850,740)" name="ULA_Exp"/>
     <comp loc="(890,400)" name="Reg_8Bit_Exp"/>
     <wire from="(1020,390)" to="(1030,390)"/>
+    <wire from="(1020,680)" to="(1020,790)"/>
+    <wire from="(1020,810)" to="(1020,950)"/>
+    <wire from="(1020,950)" to="(1460,950)"/>
     <wire from="(1030,370)" to="(1030,390)"/>
-    <wire from="(1030,370)" to="(1140,370)"/>
-    <wire from="(1140,370)" to="(1140,630)"/>
+    <wire from="(1030,370)" to="(1080,370)"/>
+    <wire from="(1070,410)" to="(1070,500)"/>
+    <wire from="(1070,410)" to="(1080,410)"/>
+    <wire from="(1100,540)" to="(1160,540)"/>
+    <wire from="(1100,570)" to="(1170,570)"/>
+    <wire from="(1140,370)" to="(1190,370)"/>
+    <wire from="(1160,410)" to="(1160,540)"/>
+    <wire from="(1160,410)" to="(1190,410)"/>
+    <wire from="(1170,420)" to="(1170,430)"/>
+    <wire from="(1170,420)" to="(1190,420)"/>
+    <wire from="(1170,430)" to="(1170,570)"/>
+    <wire from="(1170,430)" to="(1190,430)"/>
+    <wire from="(1440,450)" to="(1460,450)"/>
+    <wire from="(1460,450)" to="(1460,950)"/>
     <wire from="(230,440)" to="(230,550)"/>
     <wire from="(530,370)" to="(530,400)"/>
     <wire from="(530,370)" to="(610,370)"/>
-    <wire from="(530,400)" to="(530,630)"/>
-    <wire from="(530,630)" to="(1140,630)"/>
+    <wire from="(530,400)" to="(530,950)"/>
+    <wire from="(530,950)" to="(620,950)"/>
     <wire from="(610,370)" to="(610,480)"/>
     <wire from="(610,370)" to="(700,370)"/>
     <wire from="(610,480)" to="(620,480)"/>
+    <wire from="(620,740)" to="(640,740)"/>
+    <wire from="(620,870)" to="(620,950)"/>
+    <wire from="(620,870)" to="(650,870)"/>
+    <wire from="(620,950)" to="(920,950)"/>
+    <wire from="(640,740)" to="(640,910)"/>
+    <wire from="(640,910)" to="(650,910)"/>
     <wire from="(650,480)" to="(650,530)"/>
     <wire from="(660,480)" to="(660,560)"/>
     <wire from="(690,390)" to="(700,390)"/>
     <wire from="(700,370)" to="(700,390)"/>
     <wire from="(700,370)" to="(720,370)"/>
+    <wire from="(710,850)" to="(710,870)"/>
     <wire from="(720,370)" to="(720,480)"/>
     <wire from="(720,370)" to="(810,370)"/>
     <wire from="(720,480)" to="(730,480)"/>
@@ -215,19 +289,27 @@
     <wire from="(800,390)" to="(810,390)"/>
     <wire from="(810,370)" to="(810,390)"/>
     <wire from="(810,370)" to="(830,370)"/>
+    <wire from="(820,680)" to="(820,720)"/>
+    <wire from="(820,680)" to="(930,680)"/>
     <wire from="(830,370)" to="(830,480)"/>
     <wire from="(830,370)" to="(920,370)"/>
     <wire from="(830,480)" to="(840,480)"/>
     <wire from="(870,480)" to="(870,530)"/>
     <wire from="(880,480)" to="(880,560)"/>
     <wire from="(910,390)" to="(920,390)"/>
+    <wire from="(910,630)" to="(910,720)"/>
+    <wire from="(910,720)" to="(930,720)"/>
     <wire from="(920,370)" to="(920,390)"/>
     <wire from="(920,370)" to="(940,370)"/>
+    <wire from="(920,850)" to="(920,950)"/>
+    <wire from="(920,950)" to="(1020,950)"/>
     <wire from="(940,370)" to="(1030,370)"/>
     <wire from="(940,370)" to="(940,480)"/>
     <wire from="(940,480)" to="(950,480)"/>
     <wire from="(980,480)" to="(980,530)"/>
     <wire from="(990,480)" to="(990,560)"/>
+    <wire from="(990,680)" to="(1020,680)"/>
+    <wire from="(990,800)" to="(1010,800)"/>
   </circuit>
   <circuit name="Adder_Bin_Full">
     <a name="circuit" val="Adder_Bin_Full"/>
@@ -12703,6 +12785,7 @@
     <wire from="(490,230)" to="(490,390)"/>
   </circuit>
   <circuit name="ULA">
+    <a name="appearance" val="custom"/>
     <a name="circuit" val="ULA"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
