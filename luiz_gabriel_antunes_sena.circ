@@ -13326,15 +13326,8 @@
     <a name="circuit" val="Clock_set_enable"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="2.0"/>
-    <comp lib="0" loc="(360,330)" name="Clock">
-      <a name="highDuration" val="2"/>
-      <a name="lowDuration" val="2"/>
-      <a name="phaseOffset" val="1"/>
-    </comp>
-    <comp lib="0" loc="(360,370)" name="Clock">
-      <a name="highDuration" val="2"/>
-      <a name="lowDuration" val="2"/>
-    </comp>
+    <comp lib="0" loc="(190,310)" name="Clock"/>
+    <comp lib="0" loc="(280,330)" name="Power"/>
     <comp lib="0" loc="(610,270)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
@@ -13347,25 +13340,101 @@
       <a name="label" val="clk_s"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(610,440)" name="Pin">
+    <comp lib="1" loc="(420,370)" name="NOT Gate"/>
+    <comp lib="1" loc="(520,350)" name="AND Gate"/>
+    <comp lib="1" loc="(530,270)" name="OR Gate"/>
+    <comp lib="4" loc="(350,310)" name="T Flip-Flop">
+      <a name="appearance" val="classic"/>
+    </comp>
+    <wire from="(190,310)" to="(240,310)"/>
+    <wire from="(240,250)" to="(240,310)"/>
+    <wire from="(240,250)" to="(480,250)"/>
+    <wire from="(240,310)" to="(240,370)"/>
+    <wire from="(240,310)" to="(310,310)"/>
+    <wire from="(240,370)" to="(390,370)"/>
+    <wire from="(280,330)" to="(310,330)"/>
+    <wire from="(350,310)" to="(420,310)"/>
+    <wire from="(420,290)" to="(420,310)"/>
+    <wire from="(420,290)" to="(480,290)"/>
+    <wire from="(420,310)" to="(420,330)"/>
+    <wire from="(420,330)" to="(470,330)"/>
+    <wire from="(420,370)" to="(470,370)"/>
+    <wire from="(520,350)" to="(610,350)"/>
+    <wire from="(530,270)" to="(610,270)"/>
+  </circuit>
+  <circuit name="Clock_Stepper">
+    <a name="circuit" val="Clock_Stepper"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="2.0"/>
+    <comp lib="0" loc="(500,360)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(520,350)" name="AND Gate"/>
-    <comp lib="1" loc="(530,270)" name="OR Gate"/>
-    <wire from="(360,330)" to="(440,330)"/>
-    <wire from="(360,370)" to="(440,370)"/>
-    <wire from="(440,250)" to="(440,330)"/>
-    <wire from="(440,250)" to="(480,250)"/>
-    <wire from="(440,330)" to="(470,330)"/>
-    <wire from="(440,370)" to="(440,440)"/>
-    <wire from="(440,370)" to="(460,370)"/>
-    <wire from="(440,440)" to="(610,440)"/>
-    <wire from="(460,290)" to="(460,370)"/>
-    <wire from="(460,290)" to="(480,290)"/>
-    <wire from="(460,370)" to="(470,370)"/>
-    <wire from="(520,350)" to="(610,350)"/>
-    <wire from="(530,270)" to="(610,270)"/>
+    <comp lib="0" loc="(530,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s1"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(550,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s2"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(570,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s3"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(590,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s4"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(610,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s5"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(630,450)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="s6"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(670,400)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp loc="(450,300)" name="Clock_set_enable"/>
+    <comp loc="(620,330)" name="Stepper"/>
+    <wire from="(450,300)" to="(500,300)"/>
+    <wire from="(450,310)" to="(490,310)"/>
+    <wire from="(490,310)" to="(490,360)"/>
+    <wire from="(490,360)" to="(500,360)"/>
+    <wire from="(500,300)" to="(500,330)"/>
+    <wire from="(500,330)" to="(550,330)"/>
+    <wire from="(530,430)" to="(530,450)"/>
+    <wire from="(530,430)" to="(560,430)"/>
+    <wire from="(550,440)" to="(550,450)"/>
+    <wire from="(550,440)" to="(570,440)"/>
+    <wire from="(560,350)" to="(560,430)"/>
+    <wire from="(570,350)" to="(570,440)"/>
+    <wire from="(570,450)" to="(580,450)"/>
+    <wire from="(580,350)" to="(580,450)"/>
+    <wire from="(590,350)" to="(590,450)"/>
+    <wire from="(600,350)" to="(600,450)"/>
+    <wire from="(600,450)" to="(610,450)"/>
+    <wire from="(610,350)" to="(610,440)"/>
+    <wire from="(610,440)" to="(630,440)"/>
+    <wire from="(620,330)" to="(670,330)"/>
+    <wire from="(630,440)" to="(630,450)"/>
+    <wire from="(670,330)" to="(670,400)"/>
   </circuit>
 </project>
