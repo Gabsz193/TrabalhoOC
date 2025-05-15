@@ -1272,15 +1272,15 @@
       <a name="spacing" val="2"/>
     </comp>
     <comp lib="0" loc="(660,860)" name="Splitter">
-      <a name="facing" val="west"/>
-      <a name="fanout" val="8"/>
-      <a name="incoming" val="8"/>
-    </comp>
-    <comp lib="0" loc="(660,860)" name="Splitter">
       <a name="appear" val="center"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
       <a name="spacing" val="3"/>
+    </comp>
+    <comp lib="0" loc="(660,860)" name="Splitter">
+      <a name="facing" val="west"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
     </comp>
     <comp lib="0" loc="(690,1320)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -2291,18 +2291,6 @@
       <a name="label" val="zero_flag"/>
     </comp>
     <comp lib="0" loc="(580,120)" name="Splitter">
-      <a name="appear" val="center"/>
-      <a name="bit0" val="5"/>
-      <a name="bit1" val="4"/>
-      <a name="bit2" val="3"/>
-      <a name="bit3" val="2"/>
-      <a name="bit4" val="1"/>
-      <a name="bit5" val="0"/>
-      <a name="facing" val="north"/>
-      <a name="fanout" val="6"/>
-      <a name="incoming" val="6"/>
-    </comp>
-    <comp lib="0" loc="(580,120)" name="Splitter">
       <a name="bit0" val="5"/>
       <a name="bit1" val="4"/>
       <a name="bit2" val="3"/>
@@ -2313,6 +2301,18 @@
       <a name="fanout" val="6"/>
       <a name="incoming" val="6"/>
       <a name="spacing" val="8"/>
+    </comp>
+    <comp lib="0" loc="(580,120)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="bit0" val="5"/>
+      <a name="bit1" val="4"/>
+      <a name="bit2" val="3"/>
+      <a name="bit3" val="2"/>
+      <a name="bit4" val="1"/>
+      <a name="bit5" val="0"/>
+      <a name="facing" val="north"/>
+      <a name="fanout" val="6"/>
+      <a name="incoming" val="6"/>
     </comp>
     <comp lib="0" loc="(690,1020)" name="Splitter">
       <a name="appear" val="right"/>
@@ -2343,9 +2343,9 @@
       <a name="bit5" val="2"/>
       <a name="bit6" val="1"/>
       <a name="bit7" val="0"/>
-      <a name="facing" val="west"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
+      <a name="spacing" val="4"/>
     </comp>
     <comp lib="0" loc="(730,980)" name="Splitter">
       <a name="appear" val="center"/>
@@ -2357,9 +2357,9 @@
       <a name="bit5" val="2"/>
       <a name="bit6" val="1"/>
       <a name="bit7" val="0"/>
+      <a name="facing" val="west"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
-      <a name="spacing" val="4"/>
     </comp>
     <comp lib="1" loc="(1030,1090)" name="AND Gate">
       <a name="inputs" val="3"/>

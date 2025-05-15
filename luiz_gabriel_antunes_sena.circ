@@ -1427,12 +1427,8 @@
     <comp lib="0" loc="(210,280)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
-    <comp lib="0" loc="(210,300)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-    </comp>
-    <comp lib="0" loc="(210,320)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-    </comp>
+    <comp lib="0" loc="(210,300)" name="Pin">    <wire from="(760,250)" to="(780,250)"/>
+
     <comp lib="0" loc="(210,340)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
