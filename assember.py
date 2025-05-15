@@ -1,5 +1,13 @@
-def decode_command(command : str) -> str:
-    
+variables = {}
+
+def decode_command(command : str, i) -> str | None:
+
+    if command.startswith("."):
+        variables[command] = i
+        print(variables)
+
+        return None
+
     def switch_reg(reg : str) -> str:
         if reg == "R0":
             return "00"
@@ -59,16 +67,23 @@ with open("program.pc", 'r', encoding='UTF-8') as file:
     content = file.read()
     lines = content.split("\n")
     full_command = []
+    index = 0
     for line in lines:
         if(line):
-            converted_text = decode_command(line)
+            converted_text = decode_command(line, index)
+
+            if converted_text == None:
+                continue
+
             a = converted_text.split("\n")
 
             if(len(a) == 1):
                 full_command.append(int(a[0], 2))
+                index += 1
             else:
                 full_command.append(int(a[0], 2))
                 full_command.append(int(a[1], 2))
+                index += 2
 
     exit_file = open("content_rom.o", "wb")
     for i in full_command:
