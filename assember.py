@@ -55,8 +55,12 @@ def decode_command(command : str, i) -> str | None:
     elif command_name == "JMPR":
         return f"001100{switch_reg(arg1)}"
     elif command_name == "JMP":
+        if variables.get(arg1) != None:
+            return f"01000000\n{format(int(variables[arg1]), '08b')}" 
         return f"01000000\n{format(int(arg1), '08b')}"
     elif command_name == "JCAEZ":
+        if variables.get(arg2):
+            return f"0101{arg1}\n{format(int(variables[arg2]), '08b')}"
         return f"0101{arg1}\n{format(int(arg2), '08b')}"
     elif command_name == "CLF":
         return "01100000"
