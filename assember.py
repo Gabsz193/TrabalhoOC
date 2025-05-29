@@ -64,6 +64,20 @@ def decode_command(command : str, i) -> str | None:
         return f"0101{arg1}\n{format(int(arg2), '08b')}"
     elif command_name == "CLF":
         return "01100000"
+    elif command_name == "IN":
+        a = "0"
+        if arg1 == "ADDR":
+            a = "1"
+        elif arg1 != "DATA":
+            raise SyntaxError("Comando inválido: ADDR ou DATA")
+        return f"01110{a}{switch_reg(arg2)}"
+    elif command_name == "OUT":
+        a = "0"
+        if arg1 == "ADDR":
+            a = "1"
+        elif arg1 != "DATA":
+            raise SyntaxError("Comando inválido: ADDR ou DATA")
+        return f"01111{a}{switch_reg(arg2)}"
     else:
         raise SyntaxError("Comando inválido")
 
