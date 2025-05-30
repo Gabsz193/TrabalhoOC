@@ -2,10 +2,8 @@ variables = {}
 
 def decode_command(command : str, i) -> str | None:
 
-    if command.startswith("."):
-        variables[command] = i
-        print(variables)
-
+    if command.startswith(".") or len(command.split(" = ")) > 1:
+        # variables[command] = i
         return None
 
     def switch_reg(reg : str) -> str:
@@ -29,6 +27,10 @@ def decode_command(command : str, i) -> str | None:
         arg1 = subcommands[1]
         if len(subcommands) > 2:
             arg2 = subcommands[2]
+            
+    # if command_name == "JMP":
+    #     print(subcommands)
+    #     print(command, arg1, arg2)
 
     if command_name == "ADD":
         return f"1000{switch_reg(arg1)}{switch_reg(arg2)}"
@@ -51,6 +53,8 @@ def decode_command(command : str, i) -> str | None:
     elif command_name == "ST":
         return f"0001{switch_reg(arg1)}{switch_reg(arg2)}"
     elif command_name == "DATA":
+        if variables.get(arg2) != None:
+            return f"001000{switch_reg(arg1)}\n{format(int(variables[arg2]), '08b')}"
         return f"001000{switch_reg(arg1)}\n{format(int(arg2), '08b')}"
     elif command_name == "JMPR":
         return f"001100{switch_reg(arg1)}"
@@ -86,6 +90,32 @@ with open("program.pc", 'r', encoding='UTF-8') as file:
     lines = content.split("\n")
     full_command = []
     index = 0
+    
+    for line in lines:
+        if(line):
+            print(line)
+            
+            if(line.startswith(".")):
+                print(f"Definiu variável {line} = {index}")
+                variables[line] = index
+                
+            elif(len(line.split(" = ")) > 1):
+                (name, value) = line.split(" = ")
+                variables[name] = int(value)
+                
+            else:
+                try:
+                    a = decode_command(line, index).split("\n")
+                except:
+                    a = [1,1]
+                finally:
+                    if(len(a) == 1):
+                        index += 1
+                    else:
+                        index += 2
+    
+    index = 0
+    
     for line in lines:
         if(line):
             converted_text = decode_command(line, index)
