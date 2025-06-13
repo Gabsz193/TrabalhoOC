@@ -1,3 +1,5 @@
+# Author: Luiz Gabriel Antunes Sena
+# Matricula: 22401905
 import sys, re
 
 def two_complement_bin(num, bit_width):
@@ -9,7 +11,7 @@ class CommandMap:
         one_param_command = r'^\s*(\w+)\s*(-?\w+)\s*(;.*)?$'
         no_param_command = r'^\s*(\w+)\s*(;.*)?$'
 
-        self.commands: dict[str, tuple[int, int, str, int]] = {
+        self.commands: dict[str, tuple[int, int, str, int, str, str]] = {
             "LD": (0, 1, two_params_command, 2, 'reg', 'reg'),
             "ST": (1, 1, two_params_command, 2, 'reg', 'reg'),
             "DATA": (2, 2, two_params_command, 2, 'reg', 'num'),
@@ -41,7 +43,7 @@ class CommandMap:
                 return 3
             case _:
                 raise Exception("Invalid Register in compilation.")
-    
+
     def param_decode(self, param : str, type: str):
         match type:
             case 'reg':
@@ -52,7 +54,10 @@ class CommandMap:
                 elif param.startswith("0b"):
                     return int(param, 2)
                 else:
-                    return int(param)
+                    tmp = int(param)
+                    if tmp < -128 or tmp > 127:
+                        raise Exception("Number out of range in compilation")
+                    return tmp
             case 'none':
                 return ''
             case 'type':
@@ -108,7 +113,6 @@ class Montador:
 
         memory_i = 0
         for op, param1, param2 in self.commands:
-            print(op, param1, param2)
             code = command_map.command_code(op)
             op_binary = f'{code:04b}'
             qtd_bytes = command_map.command_size(op)
@@ -225,23 +229,25 @@ class Montador:
         if has_error:
             sys.exit(1)
 
+        print("No syntax error, proceeding")
         return lines
 
+    def save_file(self, output_path: str):
+        with open(output_path, "w") as f:
+            f.write("v3.0 hex words plain\n")
+            f.writelines(f"{i}\n" for i in self.memory)
 
 def main():
-    # Certifique-se de que dois argumentos foram fornecidos
     if len(sys.argv) != 3:
         print("Uso: python script.py <arquivo_de_input> <arquivo_de_output>")
         sys.exit(1)
 
-    # Pegue os argumentos da linha de comando
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
     montador = Montador(input_file)
-
     montador.mount()
-    montador.show_memory()
+    montador.save_file(output_file)
 
     print(f"Arquivo de input: {input_file}")
     print(f"Arquivo de output: {output_file}")
