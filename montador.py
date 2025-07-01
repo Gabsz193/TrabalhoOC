@@ -102,9 +102,14 @@ class Montador:
     lines: list[str]
     memory: list[str]
     commands: list[tuple[str, str, str]]
+    labels: dict[str, int]  # Dicionário para armazenar rótulos e suas linhas correspondentes
+
 
     def __init__(self, input_path):
         self.commands = []
+        self.labels = {}
+        self.original_lines = []
+        self.processed_lines = []
         self.lines = self.read_input(input_path)
         self.memory = ["00"] * 256
 
@@ -210,16 +215,136 @@ class Montador:
 
         return commands
 
+    def preprocess_pseudo_commands(self, lines):
+        """Substitui pseudo-comandos por instruções reais"""
+        processed_lines = []
+
+        for line in lines:
+            line = line.strip()
+
+            # Ignora linhas vazias e comentários
+            if not line or line.startswith(';'):
+                processed_lines.append(line)
+                continue
+
+            # Processa rótulos separadamente
+            if line.startswith('.'):
+                processed_lines.append(line)
+                continue
+
+            # Substitui CLF Rx por XOR Rx, Rx
+            clf_match = re.match(r'^\s*CLF\s+(R\d)\s*(;.*)?$', line, re.IGNORECASE)
+            if clf_match:
+                reg = clf_match.group(1)
+                comment = clf_match.group(2) or ""
+                processed_lines.append(f"XOR {reg}, {reg} {comment}")
+                continue
+
+            # Substitui MOVE Rx, Ry por sequência de XOR
+            move_match = re.match(r'^\s*MOVE\s+(R\d)\s*,\s*(R\d)\s*(;.*)?$', line, re.IGNORECASE)
+            if move_match:
+                rx = move_match.group(1)
+                ry = move_match.group(2)
+                comment = move_match.group(3) or ""
+                processed_lines.append(f"XOR {rx}, {ry} {comment}")
+                processed_lines.append(f"XOR {ry}, {rx} {comment}")
+                processed_lines.append(f"XOR {rx}, {ry} {comment}")
+                continue
+
+            # Substitui HALT por JMP para a própria linha (tratado depois)
+            halt_match = re.match(r'^\s*HALT\s*(;.*)?$', line, re.IGNORECASE)
+            if halt_match:
+                comment = halt_match.group(1) or ""
+                processed_lines.append(f"HALT_PLACEHOLDER {comment}")
+                continue
+
+            # Mantém a linha original se não for um pseudo-comando
+            processed_lines.append(line)
+
+        return processed_lines
+
+    def process_labels(self, lines):
+        """Processa rótulos e substitui referências"""
+        result_lines = []
+        label_map = {}
+        current_line = 0
+        halt_positions = []
+
+        # Primeira passagem: coletar rótulos
+        for i, line in enumerate(lines):
+            line = line.strip()
+
+            # Ignora linhas vazias e comentários
+            if not line or line.startswith(';'):
+                result_lines.append(line)
+                continue
+
+            # Processa rótulos
+            label_match = re.match(r'^\.(\w+)\s*(.*?)$', line)
+            if label_match:
+                label_name = f".{label_match.group(1)}"
+                rest_of_line = label_match.group(2)
+
+                # Registra o rótulo com o número da linha atual
+                label_map[label_name] = current_line
+
+                # Se houver código após o rótulo, processa-o
+                if rest_of_line:
+                    result_lines.append(rest_of_line)
+                    current_line += 1
+            else:
+                # Marca posições de HALT para segunda passagem
+                if line.startswith("HALT_PLACEHOLDER"):
+                    halt_positions.append((len(result_lines), current_line))
+
+                result_lines.append(line)
+                current_line += 1
+
+        self.labels = label_map
+
+        # Segunda passagem: substituir referências a rótulos
+        for i, line in enumerate(result_lines):
+            # Substitui referências a rótulos em JMP e J
+            jmp_match = re.match(r'^\s*(JMP|J\w*)\s+(\.\w+)\s*(;.*)?$', line, re.IGNORECASE)
+            if jmp_match:
+                cmd = jmp_match.group(1)
+                label = jmp_match.group(2)
+                comment = jmp_match.group(3) or ""
+
+                if label in label_map:
+                    result_lines[i] = f"{cmd} {label_map[label]} {comment}"
+                else:
+                    raise Exception(f"Rótulo não definido: {label}")
+
+            # Substitui HALT_PLACEHOLDER por JMP para a própria linha
+            for pos_idx, line_num in halt_positions:
+                if i == pos_idx:
+                    halt_match = re.match(r'^\s*HALT_PLACEHOLDER\s*(;.*)?$', line)
+                    if halt_match:
+                        comment = halt_match.group(1) or ""
+                        result_lines[i] = f"JMP {line_num} {comment}"
+
+        return result_lines
+
     def read_input(self, input_path: str) -> list[str]:
         has_error = False
 
         with open(input_path, "r") as f:
-            lines = f.read().splitlines()
-            for i, line in enumerate(lines):
-                if line == '': continue
+            self.original_lines = f.read().splitlines()
+
+            # Pré-processamento: substitui pseudo-comandos
+            preprocessed_lines = self.preprocess_pseudo_commands(self.original_lines)
+
+            # Processa rótulos e substitui referências
+            self.processed_lines = self.process_labels(preprocessed_lines)
+
+            # Verificação de sintaxe e montagem
+            for i, line in enumerate(self.processed_lines):
+                if not line.strip() or line.strip().startswith(';'):
+                    continue
+
                 try:
                     command = self.check_syntax(i, line)
-
                     if command is not None:
                         self.commands.append(command)
                 except Exception as e:
@@ -230,7 +355,6 @@ class Montador:
             sys.exit(1)
 
         print("No syntax error, proceeding")
-        return lines
 
     def save_file(self, output_path: str):
         with open(output_path, "w") as f:
