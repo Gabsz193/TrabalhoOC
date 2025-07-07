@@ -2,8 +2,10 @@
 # Matricula: 22401905
 import sys, re
 
+
 def two_complement_bin(num, bit_width):
     return format(num % (1 << bit_width), f'0{bit_width}b')
+
 
 class CommandMap:
     def __init__(self):
@@ -44,7 +46,7 @@ class CommandMap:
             case _:
                 raise Exception("Invalid Register in compilation.")
 
-    def param_decode(self, param : str, type: str):
+    def param_decode(self, param: str, type: str):
         match type:
             case 'reg':
                 return self.reg_decode(param)
@@ -71,7 +73,6 @@ class CommandMap:
             case _:
                 raise Exception("Invalid Param Type in compilation")
 
-
     def command_code(self, command: str) -> int:
         if command.upper().startswith("J") and not command.upper().startswith("JMP"):
             return self.commands["J"][0]
@@ -86,12 +87,12 @@ class CommandMap:
         if command.upper().startswith("J") and not command.upper().startswith("JMP"):
             return self.commands["J"][2]
         return self.commands[command.upper()][2]
-    
+
     def command_qtd_params(self, command: str) -> str:
         if command.upper().startswith("J") and not command.upper().startswith("JMP"):
             return self.commands["J"][3]
         return self.commands[command.upper()][3]
-    
+
     def command_type_params(self, command: str) -> tuple[str, str]:
         if command.upper().startswith("J") and not command.upper().startswith("JMP"):
             return self.commands["J"][4], self.commands["J"][5]
@@ -103,7 +104,6 @@ class Montador:
     memory: list[str]
     commands: list[tuple[str, str, str]]
     labels: dict[str, int]  # Dicionário para armazenar rótulos e suas linhas correspondentes
-
 
     def __init__(self, input_path):
         self.commands = []
@@ -152,17 +152,19 @@ class Montador:
                         if has_Z:
                             j_ans |= 0b0001
                     ans.append(op_binary + f'{j_ans:04b}')
-                    ans.append(two_complement_bin(param1_num, 8))                    
-                
+                    ans.append(two_complement_bin(param1_num, 8))
+
             elif qtd_params == 2:
                 param1_num = command_map.param_decode(param1, param1_t)
                 param2_num = command_map.param_decode(param2, param2_t)
 
                 if qtd_bytes == 1:
                     if op.upper() == "IN":
-                        ans.append(op_binary + "0" + two_complement_bin(param1_num, 1) + two_complement_bin(param2_num, 2))
+                        ans.append(
+                            op_binary + "0" + two_complement_bin(param1_num, 1) + two_complement_bin(param2_num, 2))
                     elif op.upper() == "OUT":
-                        ans.append(op_binary + "1" + two_complement_bin(param1_num, 1) + two_complement_bin(param2_num, 2))
+                        ans.append(
+                            op_binary + "1" + two_complement_bin(param1_num, 1) + two_complement_bin(param2_num, 2))
                     else:
                         ans.append(op_binary + two_complement_bin(param1_num, 2) + two_complement_bin(param2_num, 2))
                 elif qtd_bytes == 2:
@@ -298,7 +300,13 @@ class Montador:
                     halt_positions.append((len(result_lines), current_line))
 
                 result_lines.append(line)
-                current_line += 1
+                line : str
+                command = line.split(" ")[0]
+                command_map = CommandMap()
+
+                size = command_map.command_size(command)
+
+                current_line += size
 
         self.labels = label_map
 
