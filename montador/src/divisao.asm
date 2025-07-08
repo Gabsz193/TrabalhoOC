@@ -40,7 +40,7 @@ ST R2, R1
 ; End Guarda Divisor
 
 ; Check if divisor is greater than dividendo
-CMP R0, R1
+CMP R1, R0
 JA .END_PROGRAM
 ; End Check if divisor is greater than dividendo
 
@@ -63,12 +63,6 @@ ST R2, R3
 
 .LOOP_DIVISAO
 ADD R1, R0 ; Diminui o dividendo pelo divisor
-; Get real divisor in R3
-DATA R2, 0xfe
-LD R2, R3
-; End Get real divisor in R3
-CMP R3, R0
-JA .END_PROGRAM ; Check if divisor is greater than dividendo
 
 ; Increment the quociente
 DATA R2, 0xfd
@@ -79,18 +73,56 @@ DATA R2, 0xfd
 ST R2, R3
 ; End Increment the quociente
 
+; Get real divisor in R3
+DATA R2, 0xfe
+LD R2, R3
+; End Get real divisor in R3
+CMP R3, R0
+JA .END_PROGRAM ; Check if divisor is greater than dividendo
+
 JMP .LOOP_DIVISAO
 
 
 .END_PROGRAM
 
 DATA R2, 0xfd
-LD R2, R3
+LD R2, R3 ; Get Quociente
+DATA R1, 10
+CMP R3, R1 ; Vê se tem mais de um digito
+JAE .DOIS_DIGITOS
+
 DATA R1, 0xfe
 OUT ADDR, R1
 DATA R1, 0x30
 ADD R1, R3
 OUT DATA, R3
+JMP .END_PROGRAM_END
+
+.DOIS_DIGITOS
+DATA R0, 0
+; R0 - Contador das dezenas
+; R3 - Quociente
+.LOOP_DEZENAS
+DATA R1, -10
+ADD R1, R3
+DATA R1, 1
+ADD R1, R0
+DATA R1, 10
+CMP R1, R3
+JA .END_LOOP_DEZENAS
+
+JMP .LOOP_DEZENAS
+
+.END_LOOP_DEZENAS
+
+DATA R1, 0xfe
+OUT ADDR, R1
+DATA R1, 0x30
+ADD R1, R0
+OUT DATA, R0
+ADD R1, R3
+OUT DATA, R3
+JMP .END_PROGRAM_END
 
 .END_PROGRAM_END
 JMP .END_PROGRAM_END
