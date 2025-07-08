@@ -296,15 +296,21 @@ class Montador:
                     current_line += 1
             else:
                 # Marca posições de HALT para segunda passagem
+                halt = False
+
                 if line.startswith("HALT_PLACEHOLDER"):
                     halt_positions.append((len(result_lines), current_line))
+                    halt = True
 
                 result_lines.append(line)
                 line : str
                 command = line.split(" ")[0]
                 command_map = CommandMap()
 
-                size = command_map.command_size(command)
+                if halt:
+                    size = 2
+                else:
+                    size = command_map.command_size(command)
 
                 current_line += size
 
