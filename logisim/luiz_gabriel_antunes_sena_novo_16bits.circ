@@ -1498,15 +1498,15 @@
       <a name="spacing" val="2"/>
     </comp>
     <comp lib="0" loc="(660,860)" name="Splitter">
-      <a name="facing" val="west"/>
-      <a name="fanout" val="8"/>
-      <a name="incoming" val="8"/>
-    </comp>
-    <comp lib="0" loc="(660,860)" name="Splitter">
       <a name="appear" val="center"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
       <a name="spacing" val="3"/>
+    </comp>
+    <comp lib="0" loc="(660,860)" name="Splitter">
+      <a name="facing" val="west"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
     </comp>
     <comp lib="0" loc="(690,1320)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -2256,7 +2256,7 @@
       <circ-port dir="in" pin="550,1350" x="380" y="230"/>
       <circ-port dir="in" pin="550,1380" x="380" y="240"/>
       <circ-port dir="in" pin="550,1410" x="380" y="250"/>
-      <circ-port dir="in" pin="700,1600" x="470" y="260"/>
+      <circ-port dir="in" pin="700,1600" x="470" y="250"/>
       <circ-port dir="out" pin="1260,1270" x="470" y="200"/>
       <circ-port dir="out" pin="1260,1290" x="470" y="210"/>
       <circ-port dir="out" pin="1330,40" x="470" y="220"/>
@@ -2499,6 +2499,7 @@
     <comp lib="0" loc="(700,1600)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="north"/>
+      <a name="label" val="ir"/>
       <a name="radix" val="16"/>
       <a name="width" val="16"/>
     </comp>
@@ -2519,9 +2520,9 @@
       <a name="bit5" val="2"/>
       <a name="bit6" val="1"/>
       <a name="bit7" val="0"/>
-      <a name="facing" val="west"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
+      <a name="spacing" val="4"/>
     </comp>
     <comp lib="0" loc="(730,980)" name="Splitter">
       <a name="appear" val="center"/>
@@ -2533,9 +2534,9 @@
       <a name="bit5" val="2"/>
       <a name="bit6" val="1"/>
       <a name="bit7" val="0"/>
+      <a name="facing" val="west"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
-      <a name="spacing" val="4"/>
     </comp>
     <comp lib="1" loc="(1030,1090)" name="AND Gate">
       <a name="inputs" val="3"/>
